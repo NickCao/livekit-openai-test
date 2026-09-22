@@ -1,8 +1,9 @@
+from dotenv import load_dotenv
 from livekit import agents
 from livekit.agents import Agent, AgentServer, AgentSession, room_io
-from livekit.plugins import (
-    openai,
-)
+from livekit.plugins import openai
+
+load_dotenv()
 
 
 class Assistant(Agent):
