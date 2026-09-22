@@ -4,10 +4,11 @@ from livekit.agents import (
     Agent,
     AgentServer,
     AgentSession,
+    InterruptionOptions,
     TurnHandlingOptions,
     room_io,
 )
-from livekit.plugins import openai
+from livekit.plugins import openai, silero
 
 load_dotenv()
 
@@ -26,8 +27,15 @@ async def my_agent(ctx: agents.JobContext):
         llm=openai.realtime.RealtimeModel(
             turn_detection=None,
         ),
+        # full duplex:
+        # turn_handling=TurnHandlingOptions(
+        #     turn_detection="manual",
+        # ),
+        # turn taking:
+        vad=silero.VAD.load(),
         turn_handling=TurnHandlingOptions(
-            turn_detection="manual",
+            turn_detection="vad",
+            interruption=InterruptionOptions(mode="vad"),
         ),
     )
 
