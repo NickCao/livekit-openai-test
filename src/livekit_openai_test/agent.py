@@ -1,8 +1,13 @@
 from dotenv import load_dotenv
 from livekit import agents
-from livekit.agents import Agent, AgentServer, AgentSession, room_io
+from livekit.agents import (
+    Agent,
+    AgentServer,
+    AgentSession,
+    TurnHandlingOptions,
+    room_io,
+)
 from livekit.plugins import openai
-from openai.types.beta.realtime.session import TurnDetection
 
 load_dotenv()
 
@@ -20,7 +25,10 @@ async def my_agent(ctx: agents.JobContext):
     session = AgentSession(
         llm=openai.realtime.RealtimeModel(
             turn_detection=None,
-        )
+        ),
+        turn_handling=TurnHandlingOptions(
+            turn_detection="manual",
+        ),
     )
 
     await session.start(
