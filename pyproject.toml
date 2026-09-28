@@ -15,6 +15,18 @@ dependencies = [
 [project.scripts]
 livekit-openai-test = "livekit_openai_test:main"
 
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=1.2",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+markers = [
+    "e2e: launches the LiveKit agent and calls its configured model",
+]
+
 [build-system]
 requires = ["uv_build>=0.12.9,<0.13.0"]
 build-backend = "uv_build"
